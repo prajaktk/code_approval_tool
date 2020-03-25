@@ -40,7 +40,6 @@ def get_dependencies(files: [str]) -> List[str]:
 # populate owners
 def get_owners(dependencies_list): #:
     owners_list = defaultdict(set)
-    #print(dependencies_list)
     for file, dependency in dependencies_list.items():
         for directory in dependency:
             with open(directory+'/.owners','r') as f:
@@ -68,7 +67,7 @@ def main(changed_files: List[str], approvers: List[str]) -> None:
         for element in missing_approvals:
             missing_owners = missing_owners + ' ' + str(element) 
         
-        print(f'Missing Approvals: {missing_owners}'')
+        pp(f'Missing Approvals: {missing_owners}'')
         return ('Insufficient approvals')
     else:
         return ('Approved')
@@ -76,19 +75,19 @@ def main(changed_files: List[str], approvers: List[str]) -> None:
 
 if __name__ == "__main__":
     parser = ArgumentParser(
-    prog = 'validate_approvals',
+    prog = 'code_approval_tool',
     description = 'An validate approval tool',
-    epilog = 'We are done. This goes at the bottom',
+    epilog = '',
     allow_abbrev = False,)
 
     parser.add_argument('--approvers', nargs='*', metavar='approvers')
     parser.add_argument('--changed-files', nargs='*', metavar='changed-files')
     args = parser.parse_args()
-    print(main(args.changed_files, args.approvers))
+    pp(main(args.changed_files, args.approvers))
 
     approvers = ['alovelace1']
     changed_files = ['./folder2/folder4/test4.txt', './folder3/test3.txt']
-    reponse = main(changed_files, approvers) print(reponse)
+    reponse = main(changed_files, approvers)
     assert reponse == 'Insufficient approvals'
     approvers = ['alovelace', 'testuser1', 'testuser', 'testuser4', 'testuser4']
     assert main(changed_files, approvers) == 'Approved'
