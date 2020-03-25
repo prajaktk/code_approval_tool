@@ -5,7 +5,7 @@ Code Approval Tool
 
 
 Expects following directory structure
-
+```
 RootDirectory/
     directory1/
         .dependencies => path to other directories that current directory depends on
@@ -16,3 +16,4 @@ RootDirectory/
     directory3/
         .dependencies => path to other directories that current directory depends on
         .owners => tells who the approver is
+```
